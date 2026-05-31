@@ -1,0 +1,28 @@
+instruments:
+  - id: gold
+    name: Gold
+    symbol: GC=F
+    category: commodity
+    currency: USD
+    price_format: "${:,.2f}"
+
+  - id: crude
+    name: Crude Oil
+    symbol: CL=F
+    category: commodity
+    currency: USD
+    price_format: "${:,.2f}"
+
+  - id: usd_inr
+    name: USD/INR
+    symbol: INR=X
+    category: fx
+    currency: INR
+    price_format: "₹{:,.2f}"
+
+  - id: dxy
+    name: USD Strength (UUP)
+    symbol: UUP
+    category: fx
+    currency: USD
+    price_format: "${:,.2f}"
