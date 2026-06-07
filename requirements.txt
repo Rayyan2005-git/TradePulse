@@ -4,3 +4,4 @@ plotly>=5.18.0
 pandas>=2.0.0
 pyyaml>=6.0.1
 certifi>=2024.0.0
+streamlit-autorefresh>=2.0.0

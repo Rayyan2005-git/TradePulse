@@ -1,6 +1,7 @@
 """FX and cross-market summary."""
 
 import streamlit as st
+from streamlit_autorefresh import st_autorefresh
 
 from services.dashboard import DashboardService
 from ui.components.metric_card import render_metric_row
@@ -9,6 +10,8 @@ from ui.page_utils import setup_page
 
 st.title("💱 FX & Spreads")
 st.markdown("USD/INR and US Dollar Index")
+
+st_autorefresh(interval=60000, limit=1000, key="data_refresh_fx")
 
 snapshot, instruments, period, _ = setup_page(category="fx")
 

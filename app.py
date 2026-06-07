@@ -5,6 +5,7 @@ from config.ssl_fix import apply_ssl_cert_bundle
 apply_ssl_cert_bundle()
 
 import streamlit as st
+from streamlit_autorefresh import st_autorefresh
 
 from services.dashboard import DashboardService
 from ui.components.metric_card import render_metric_row
@@ -20,7 +21,10 @@ st.set_page_config(
 
 st.title("⚡ TradePulse")
 st.markdown("### IIFT Analyst Dashboard — Market Snapshot")
-st.caption("Delayed market data · Use sidebar to change period or refresh")
+st.caption("Delayed market data · Auto-refreshes every 60s")
+
+# Auto-refresh every 60 seconds (60000 milliseconds)
+st_autorefresh(interval=60000, limit=1000, key="data_refresh")
 
 snapshot, instruments, period, interval = setup_page()
 

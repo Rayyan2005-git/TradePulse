@@ -12,13 +12,18 @@ def render_metric_card(quote: Quote) -> None:
         return
 
     symbol, delta_abs, delta_pct, css = format_change(quote)
+    bg_css = "positive-bg" if css == "positive" else "negative-bg"
+    
     st.markdown(
         f"""
         <div class="metric-card">
-            <div class="metric-label">{quote.name}</div>
+            <div class="metric-header">
+                <span class="metric-label">{quote.name}</span>
+            </div>
             <div class="metric-value">{format_price(quote)}</div>
-            <div class="metric-delta {css}">
-                {symbol} {delta_abs} ({delta_pct})
+            <div class="metric-delta {css} {bg_css}">
+                <span>{symbol}</span>
+                <span>{delta_abs} ({delta_pct})</span>
             </div>
         </div>
         """,
