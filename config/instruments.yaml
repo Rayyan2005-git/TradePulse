@@ -26,3 +26,25 @@ instruments:
     category: fx
     currency: USD
     price_format: "${:,.2f}"
+
+  - id: btc
+    name: Bitcoin
+    symbol: BTC-USD
+    category: crypto
+    currency: USD
+    price_format: "${:,.2f}"
+
+  - id: nifty50
+    name: Nifty 50
+    symbol: ^NSEI
+    category: stocks
+    currency: INR
+    price_format: "₹{:,.2f}"
+
+  - id: sensex
+    name: Sensex
+    symbol: ^BSESN
+    category: stocks
+    currency: INR
+    price_format: "₹{:,.2f}"
+

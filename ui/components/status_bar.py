@@ -1,37 +1,38 @@
+"""Status bar and freshness indicators for market data snapshots."""
+
 import streamlit as st
 
 from domain.models import MarketSnapshot
+from ui.components.sidebar import render_sidebar
 
 
 def render_status_bar(snapshot: MarketSnapshot) -> None:
+    """Render a terminal freshness indicator bar with active pulse dot."""
     fetched = snapshot.fetched_at.strftime("%Y-%m-%d %H:%M:%S UTC")
-    status = f"{snapshot.success_count}/{snapshot.total_count} instruments loaded"
+    status = f"{snapshot.success_count}/{snapshot.total_count} loaded"
+
     st.markdown(
-        f'<p class="freshness-bar">'
-        f"Snapshot: {status} · Fetched {fetched} · "
-        f"Period: {snapshot.period} · Source: {snapshot.source}"
-        f"</p>",
+        f"""
+        <div class="freshness-bar">
+            <span class="pulse-dot"></span>
+            <span><strong>Snapshot Status:</strong> {status}</span>
+            <span>·</span>
+            <span><strong>Updated:</strong> {fetched}</span>
+            <span>·</span>
+            <span><strong>Period:</strong> {snapshot.period} ({snapshot.interval})</span>
+            <span>·</span>
+            <span><strong>Source:</strong> {snapshot.source}</span>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
+
     if snapshot.load_errors:
-        with st.expander("Load warnings", expanded=False):
+        with st.expander(f"⚠️ Feed Alerts ({len(snapshot.load_errors)})", expanded=False):
             for err in snapshot.load_errors:
                 st.warning(err)
 
 
 def render_sidebar_controls() -> tuple[str, str, bool]:
-    st.sidebar.header("Controls")
-    period = st.sidebar.selectbox(
-        "History period",
-        options=["5d", "1mo", "3mo", "6mo", "1y"],
-        index=1,
-    )
-    interval = st.sidebar.selectbox(
-        "Interval",
-        options=["1d", "1h"],
-        index=0,
-    )
-    refresh = st.sidebar.button("Refresh data", use_container_width=True)
-    if refresh:
-        st.cache_data.clear()
-    return period, interval, refresh
+    """Compatibility wrapper delegating to modern render_sidebar."""
+    return render_sidebar()

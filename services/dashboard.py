@@ -30,6 +30,17 @@ class DashboardService:
         ]
 
     @staticmethod
+    def top_movers(
+        snapshot: MarketSnapshot,
+        ascending: bool = False,
+        limit: int | None = None,
+    ) -> List[Quote]:
+        """Rank valid quotes by 1-day % change (highest first if ascending=False)."""
+        valid = [q for q in snapshot.quotes.values() if q.is_valid]
+        ranked = sorted(valid, key=lambda q: change_pct(q), reverse=not ascending)
+        return ranked[:limit] if limit is not None else ranked
+
+    @staticmethod
     def comparison_dataframe(snapshot: MarketSnapshot) -> pd.DataFrame:
         """Normalized cumulative return comparison across instruments."""
         rows = {}
